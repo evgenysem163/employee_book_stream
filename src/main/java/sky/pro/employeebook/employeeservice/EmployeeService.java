@@ -32,16 +32,17 @@ public class EmployeeService {
                 .orElseThrow(() -> new NotFindException(" Сотрудник с минимальной зарплатой"));
     }
 
-    public List<Employee> findEmployeeFromDepartment (int department){
+    public List<Employee> findEmployeeFromDepartment(int department) {
         return employees.stream()
                 .filter(e -> e.getDepartment() == department)
                 .collect(Collectors.toList());
     }
-     public List<Employee> findEmployeeAllFromDepartment(){
+
+    public List<Employee> findEmployeeAllFromDepartment() {
         return employees.stream()
                 .sorted(Comparator.comparing(Employee::getDepartment))
                 .collect(Collectors.toList());
-     }
+    }
 
 
 }
