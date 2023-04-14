@@ -13,20 +13,35 @@ import java.util.stream.Collectors;
 public class EmployeeService {
     private final List<Employee> employees = new ArrayList<>();
 
-    public Employee addEmployee(Employee employee) {   //Добавление сотрудников
+    public Employee addEmployee(Employee employee) {
         employees.add(employee);
         return employee;
     }
-        public Employee findMaxSalary(int department) throws NotFindException{
+
+    public Employee findMaxSalary(int department) throws NotFindException {
         return employees.stream()
-                .filter(e -> e.getDepartment() == department)// лямбда выражение или анономная функция
-                .max(Comparator.comparingInt(Employee::getSalary)) // нахождение максимального значения по зп в отделе
+                .filter(e -> e.getDepartment() == department)
+                .max(Comparator.comparingInt(Employee::getSalary))
                 .orElseThrow(() -> new NotFindException("Сотрудник с максимальной зарплатой не найден"));
     }
-    public List<Employee> employeesFindAll(){
+
+    public Employee findMinSalary(int department) throws NotFindException {
         return employees.stream()
+                .filter(e -> e.getDepartment() == department)
+                .min(Comparator.comparingInt(Employee::getSalary))
+                .orElseThrow(() -> new NotFindException(" Сотрудник с минимальной зарплатой"));
+    }
+
+    public List<Employee> findEmployeeFromDepartment (int department){
+        return employees.stream()
+                .filter(e -> e.getDepartment() == department)
                 .collect(Collectors.toList());
     }
+     public List<Employee> findEmployeeAllFromDepartment(){
+        return employees.stream()
+                .sorted(Comparator.comparing(Employee::getDepartment))
+                .collect(Collectors.toList());
+     }
 
 
 }

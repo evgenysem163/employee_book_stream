@@ -13,25 +13,40 @@ import java.util.List;
 @RestController
 @RequestMapping("/departments")
 public class EmployeeController {
-    private final EmployeeService employeeService; // Заинджектили класс Service
+    private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @GetMapping("/add")
-    public Employee addEmployee(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
-                                @RequestParam("salary") int salary, @RequestParam("department") int department) {
-        return employeeService.addEmployee(new Employee(firstName, lastName, salary, department));
+    public Employee addEmployee(@RequestParam("firstName") String firstName,
+                                @RequestParam("lastName") String lastName,
+                                @RequestParam("salary") int salary, @RequestParam("department")
+                                int department) {
+        return employeeService.addEmployee(
+                new Employee(firstName, lastName, salary, department));
     }
+
     @GetMapping("/max-salary")
-    public Employee findMaxSalary(@RequestParam ("departmentId") int department) throws NotFindException {
+    public Employee findMaxSalary(@RequestParam("departmentId")
+                                  int department) throws NotFindException {
         return employeeService.findMaxSalary(department);
     }
 
-    @GetMapping("/find")
-    public List<Employee> employeesFindAll(){
-        return employeeService.employeesFindAll();
+    @GetMapping("/min-salary")
+    public Employee findMinSalary(@RequestParam("departmentId")
+                                  int department) throws NotFindException {
+        return employeeService.findMinSalary(department);
     }
 
+    @GetMapping("/all")
+    public List<Employee> findEmployeeFromDepartment(@RequestParam(value = "/departmentId",
+            required = false) Integer department) {
+        if (department != null) {
+            return employeeService.findEmployeeFromDepartment(department);
+        } else {
+            return employeeService.findEmployeeAllFromDepartment();
+        }
+    }
 }

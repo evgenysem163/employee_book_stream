@@ -36,7 +36,8 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return salary == employee.salary && department == employee.department && firstName.equals(employee.firstName) && lastName.equals(employee.lastName);
+        return salary == employee.salary && department == employee.department &&
+                firstName.equals(employee.firstName) && lastName.equals(employee.lastName);
     }
 
     @Override
